@@ -33,13 +33,27 @@ namespace EmployeeManagement
                 app.UseDeveloperExceptionPage();
             }
 
-            DefaultFilesOptions defaultFilesOptions = new DefaultFilesOptions();
-            defaultFilesOptions.DefaultFileNames.Clear();
-            defaultFilesOptions.DefaultFileNames.Add("foo.html");
+            //DefaultFilesOptions defaultFilesOptions = new DefaultFilesOptions();
+            //defaultFilesOptions.DefaultFileNames.Clear();
+            //defaultFilesOptions.DefaultFileNames.Add("foo.html");
 
 
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
+            // Middleware to serve default files
+            // default.html, default.htm, index.html, index.htm
+            // app.UseDefaultFiles();
+
+            // changed defaultfile to foo.html
+            //app.UseDefaultFiles(defaultFilesOptions);
+
+            // Middleware to serve static files
+            //app.UseStaticFiles();
+
+            // using file server middleware
+            FileServerOptions fileServerOptions = new FileServerOptions();
+            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Clear();
+            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Add("foo.html");
+            app.UseFileServer(fileServerOptions);
+
 
 
             // Middleware
