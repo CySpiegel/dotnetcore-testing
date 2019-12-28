@@ -13,16 +13,19 @@ namespace EmployeeManagement
 {
     public class Startup
     {
-        private IConfiguration _config;
+        //private IConfiguration _config;
 
-        public Startup(IConfiguration config)
-        {
-            _config = config;
-        }
+        //public Startup(IConfiguration config)
+        //{
+        //    _config = config;
+        //}
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // Adding MVC services to application dependency injection container
+            services.AddMvc();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,20 +49,27 @@ namespace EmployeeManagement
             //app.UseDefaultFiles(defaultFilesOptions);
 
             // Middleware to serve static files
-            //app.UseStaticFiles();
+            // UseStaticFiles must come before UseMvcWithDefaultRoute to short circuit request pipeline.
+            app.UseStaticFiles();
+
+            // addomg MVC middleware tp Requestion pipeline
+            app.UseMvcWithDefaultRoute();
 
             // using file server middleware
-            FileServerOptions fileServerOptions = new FileServerOptions();
-            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Clear();
-            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Add("foo.html");
-            app.UseFileServer(fileServerOptions);
+            //fileserveroptions fileserveroptions = new fileserveroptions();
+            //fileserveroptions.defaultfilesoptions.defaultfilenames.clear();
+            //fileserveroptions.defaultfilesoptions.defaultfilenames.add("foo.html");
 
 
+            //app.UseFileServer(fileServerOptions);
 
+            //app.UseFileServer();
+                                 
             // Middleware
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello World");
+                //throw new Exception("Some error in processing request");
+                await context.Response.WriteAsync("Hellow World");
             });
         }
     }
